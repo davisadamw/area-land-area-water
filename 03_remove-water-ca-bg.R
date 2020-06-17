@@ -68,5 +68,11 @@ bg_updated_geom %>%
   write_rds("out_dataset/ca_bgs_nowater.rds", compress = "gz") %>% 
   write_sf("out_dataset/ca_bgs_nowater.shp")
 
+# let's do it with tracts too
+tr_updated_geom <- bg_updated_geom %>% 
+  mutate(GEOID = str_sub(GEOID, 1, -2)) %>% 
+  with_groups(GEOID, summarize)
 
-
+tr_updated_geom %>% 
+  write_rds("out_dataset/ca_trs_nowater.rds", compress = "gz") %>% 
+  write_sf("out_dataset/ca_trs_nowater.shp")
